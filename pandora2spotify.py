@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-u', '--pandora-username', help='Pandora username', required=True)
 parser.add_argument('-v', '--spotify-username', help='Spotify username', required=True)
 parser.add_argument('-p', '--playlist', help='Spotify playlist to use', required=True)
-parser.add_arugment('-a', '--pandora-auth', help='Pandora auth token', required=True)
+parser.add_argument('-a', '--pandora-auth', help='Pandora auth token', required=True)
 parser.add_argument('-b', '--spotify-auth', help='Spotify auth token', required=True)
 parser.add_argument('-d', '--debug', help='Display additional information', type=bool, default=False)
 args = parser.parse_args()
@@ -25,8 +25,8 @@ spotify_user_id = args.spotify_username
 def getPandoraList(username, authtoken, csrftoken):
 	r = requests.post('https://www.pandora.com/api/v1/station/getFeedback', '{pageSize: 100, startIndex: 0, webname: "'+username+'"}', cookies={'csrftoken':csrftoken}, headers={'X-CsrfToken':csrftoken,'Content-type':'application/json','X-AuthToken':authtoken})
 	if r.status_code != 200:
-			quit(r.text)
-
+			print('Error!', r.text)
+			quit()
 	json = r.json()
 
 	total_songs = json['total']
@@ -62,7 +62,7 @@ def getSpotifySongUris(search_list, authtoken):
 		if len(j['best_match']['items']) > 0:
 			uri_list.append(j['best_match']['items'][0]['uri'])
 		else:
-			missed_list.append(search_string)
+			missed_list.append('"{}" by {} from {}'.format(s['title'], s['artist'], s['album']))
 			if debug:
 				print('Search failed for: ' + search_string)
 	print('Matched', len(uri_list), 'tracks.')
