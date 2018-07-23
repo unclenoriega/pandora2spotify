@@ -11,19 +11,19 @@ You'll need a few things to get started:
 4. A Pandora auth token
 5. A Spotify auth token
 
-# Getting a Spotify Playlist ID
+## Getting a Spotify Playlist ID
 
 Simply create a playlist and navigate to its page in Spotify's web player. The ID is in the URL like so: `https://open.spotify.com/user/{username}/playlist/{playlist_id}`
 
-# Getting a Spotify Auth Token
+## Getting a Spotify Auth Token
 
 While you're in the Spotify web player, open your browser's developer tools, and inspect a request to api.spotify.com, looking for a request header called `authorization`. The value will start with 'Bearer' and be really long. This is the token you need.
 
-# Getting a Pandora Auth Token
+## Getting a Pandora Auth Token
 
 Similarly, login to pandora.com and look for a request header called `X-AuthToken`. Its value is not as long. This is your Pandora auth token.
 
-# Putting it all together
+## Putting it all together
 
 Then just do this: `python3 pandora2spotify.py --pandora-username {pandora_username} --spotify-username {spotify_username} --playlist {playlist_id} --pandora-auth {pandora_authtoken} --spotify-auth {spotify_authtoken}`
 
